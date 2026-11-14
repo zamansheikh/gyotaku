@@ -325,7 +325,10 @@ fn fetch(file: &'static str, url: &str, sha256: &str) -> Result<Vec<u8>> {
         done: bytes.len() as u64,
         total,
     });
-    let got = format!("{:x}", Sha256::digest(&bytes));
+    let got: String = Sha256::digest(&bytes)
+        .iter()
+        .map(|b| format!("{b:02x}"))
+        .collect();
     if got != sha256 {
         bail!("{url} doesn't match its checksum, expected {sha256} got {got}");
     }

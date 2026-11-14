@@ -52,11 +52,15 @@ pub use imp::{listen, resident_address, wake};
 // The window, and the key that brings it up.
 pub use imp::{hides_when_inactive, open_launcher, register_summon, take_focus};
 
+// Whether the summon key can be changed in settings (not on Linux, where the
+// desktop owns it), and what the default is.
+pub use imp::{SUMMON_DEFAULT, summon_rebindable, update_summon};
+
 // Which monitor to open on. The key is pressed while working in another app,
 // often on another screen, and a window that opens where the work isn't is a
 // window you have to look away to use. `None` leaves the choice to gpui,
 // which centres on the primary monitor.
-pub use imp::active_display;
+pub use imp::{active_display, pinch_scale};
 
 // And whether the window landed there. Windows converts the position it is
 // given with the wrong monitor's scaling when two monitors are scaled
@@ -77,6 +81,10 @@ pub use imp::SYSTEM_FRAMES_WINDOW;
 // the system's close keys putting the window away instead of quitting.
 pub use imp::{MODIFIER_NAME, default_key, hide_keys, settle_in};
 
+// The icon's pause item says whether reading is paused (nothing on Linux,
+// which has no icon).
+pub use imp::update_paused;
+
 // Getting the system's folder picker in front of everything.
 pub use imp::before_picker;
 
@@ -91,6 +99,10 @@ pub use imp::{
     background_status, keep_reading, revive_reader, service_status, start_service, stop_service,
 };
 
+// Quitting ends the reader too where the app is what started it (not on
+// Linux, where it's a service).
+pub use imp::stop_reader;
+
 // Where screenshot tools save, and the wording that differs.
 pub use imp::{WORDS, tool_folders};
 
@@ -100,6 +112,8 @@ pub use imp::{WORDS, tool_folders};
 pub enum TrayCommand {
     Open,
     Settings,
+    /// Pauses reading, or resumes it.
+    Pause,
     Quit,
 }
 
